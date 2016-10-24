@@ -2,7 +2,6 @@
 var mysql = require('mysql');
 // require prompt
 var prompt = require('prompt');
-
 // define connection to already created database Bamazon in MySQL Workbench
 var connection = mysql.createConnection({
         host: "localhost",
@@ -43,20 +42,19 @@ var start = function() {
 // The second message should ask how many units of the product they would like to buy.
 
   prompt.get([{
+      message: "What is the id of the product you would like to buy?",
       name: 'id',
       required: true,
-      message: "What is the id of the product"
+      pattern: /[0-9]/
     }, {
       name: 'quantity',
       required: true,
-      message: "How many items?"
+      message: "How many items would you like to buy?"
     }], function (err, result) {
-    // 
-    // Log the results. 
-    // 
+    // Log the results.
     console.log('Command-line input received:');
-    console.log('  id: ' + result.id);
-    console.log('  quantity: ' + result.quantity);
+    console.log('Customer would like the product with id: ' + result.id);
+    console.log('Customer desires quantity of ' + result.quantity);
   });
 }
 
