@@ -40,16 +40,17 @@ var start = function() {
 // The app then prompts users with **two messages**.
 // The first should ask them the ID of the product they would like to buy.
 // The second message should ask how many units of the product they would like to buy.
-
+console.log("Please enter the ID of the product you want and its quantity.")
   prompt.get([{
-      message: "What is the id of the product you would like to buy?",
+      message: "Enter a number",
       name: 'id',
       required: true,
       pattern: /[0-9]/
     }, {
       name: 'quantity',
       required: true,
-      message: "How many items would you like to buy?"
+      message: "Enter a number",
+      pattern: /[0-9]/
     }], function (err, result) {
     // Log the results.
     console.log('Command-line input received:');
