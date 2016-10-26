@@ -1,9 +1,9 @@
 # Bamazon
 
 
-Bamazon - Week of 12 HW: Node.js & MySQL
+##Bamazon - Week of 12 HW: Node.js & MySQL
 
-Overview
+###Overview
 
 Creating an Amazon-like storefront with MySQL. The app will take in orders from customers and deplete stock from the store's inventory.
 
@@ -11,9 +11,9 @@ Ideally, the app will track product sales across your store's departments and th
 
 Use the MySQL and Prompt npm packages.
 
-**Submission Guide**
+###**Submission Guide**
 
-Challenge #1: Customer View (Minimum Requirement)
+###Challenge #1: Customer View (Minimum Requirement)
 
 - Create a MySQL Database called Bamazon.
 
