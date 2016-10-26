@@ -51,7 +51,6 @@ var start = function() {
                         break;
                     case "View Low Inventory":
                         viewLowInventory();
-                        // decision();
                         break;
                     case "Add to Inventory":
                         addToInventory();
@@ -65,21 +64,90 @@ var start = function() {
                 // decision();
             }) //close first promise
     } //close start function
+
+// INSERT INTO Products (ProductName, DepartmentName, Price, StockQuantity)
+// values("radio", "home" , 23, 20);
+function addNewProduct() {
+    inquirer.prompt([{
+        name: "item",
+        type: "input",
+        message: "Type name of item for sale."
+    }, {
+
+        name: "dept",
+        type: "input",
+        message: "Enter depatment name."
+    }, {
+        name: "price",
+        type: "input",
+        message: "What is the price?",
+        validate: function(value) {
+            if (isNaN(value) == false && parseInt(value) > 0) {
+                return true;
+            } else {
+                console.log("")
+                console.log(error("ERROR: Please enter a number."))
+                return false;
+            }
+        }
+    }, {
+        name: "qty",
+        type: "input",
+        message: "How many items are you adding to inventory?",
+        validate: function(value) {
+            if (isNaN(value) == false && parseInt(value) > 0) {
+                return true;
+            } else {
+                console.log("")
+                console.log(error("ERROR: Please enter a number."))
+                return false;
+            }
+        }
+    }]).then(function(answers) {
+
+        console.log("")
+        console.log("Added to inventory: " + answers.item + " | " + answers.dept + " | " + answers.price + " | " + answers.qty + " | ")
+        console.log("")
+
+        connection.query('INSERT INTO Bamazon.Products values (answers.item, answers.dept, answers.price, answers.qty)', function(err, adding) {
+
+        }) 
+      })
+  }
+// values("radio", "home" , 23, 20)
+
+    //close prompt //close addNewProduct
+
+function addToInventory() {
+
+
+} //close addToInventory
+
+
+
+
+
+
 function viewLowInventory() {
 
-  connection.query('SELECT * FROM Bamazon.Products', function(err, response) {
-    
-    connection.query('SELECT StockQuantity FROM Bamazon.Products', function(err, res) {
-            if (err) throw err;
-            for (var i = 0; i < res.length; i++) {
-              if (res[i].StockQuantity < 100) {
-                console.log(mag("|" + "Low Inventory of: " + res[i].StockQuantity + " | Item: " +response[i].ProductName));
-              }
-            }
+    connection.query('SELECT * FROM Bamazon.Products', function(err, response) {
 
-        }) //close low inv
+        connection.query('SELECT StockQuantity FROM Bamazon.Products', function(err, res) {
+                if (err) throw err;
+                for (var i = 0; i < res.length; i++) {
+                    if (res[i].StockQuantity < 5) {
+                        console.log(mag("|" + "Low Inventory of: " + res[i].StockQuantity + " | Item: " + response[i].ProductName));
+                        decision();
+                    } else {
+                        console.log(y("All items have at least 5 items."))
+                        decision();
+                        return false;
+                    }
+                }
 
-})
+            }) //close low inv
+
+    })
 }
 
 
@@ -97,19 +165,20 @@ function viewAll() {
 
         }
         console.log("========================================================================");
-        console.log("");
+        console.log("Press any key to continue.");
 
     });
 
 }
 
 function decision() {
+    console.log(green("========================================"))
     inquirer.prompt([{
         name: "decision",
         type: "confirm",
-        message: "Would you like to start again Manager?"
+        message: "Would you like to start again?"
     }]).then(function(answer) {
-        if (answer.decision === true) {
+        if (answer.decision == true) {
             start();
         } else {
             console.log("Exit.")
