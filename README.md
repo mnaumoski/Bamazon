@@ -5,6 +5,8 @@
 
 ###Overview
 
+####Video link: https://youtu.be/LaeLlO37kbs
+
 Creating an Amazon-like storefront with MySQL. The app will take in orders from customers and deplete stock from the store's inventory.
 
 Ideally, the app will track product sales across your store's departments and then provide a summary of the highest-grossing departments in the store.

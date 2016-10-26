@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/mnaumoski/Bamazon/issues"
   },
-  "homepage": "https://github.com/mnaumoski/Bamazon#readme"
+  "homepage": "https://github.com/mnaumoski/Bamazon#readme",
+  "dependencies": {
+    "chalk": "^1.1.3"
+  }
 }
