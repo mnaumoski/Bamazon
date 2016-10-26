@@ -91,14 +91,19 @@ var start = function() {
                     var newQuantity = parseInt(res[idOfProductToBuy].StockQuantity - ans.quantity);
                     console.log("Update ineventory " + newQuantity);
 
+
+                    connection.query("UPDATE products SET ? WHERE ?", [{
+                        StockQuantity: newQuantity
+                    }, {
+                        id: answer.id
+                    }], function(err, res) {
+                        if (err) throw err;
+                        console.log(res)
+
+
+                    });
                 })
-                connection.query("UPDATE products SET ? WHERE ?", [{
-                    StockQuantity: newQuantity
-                }, {
-                    id: answer.id
-                }], function(err, res) {
-                    if (err) throw err;
-                    console.log(res) });
+
 
             })
         })
