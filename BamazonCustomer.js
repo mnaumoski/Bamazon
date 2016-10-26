@@ -136,5 +136,4 @@ var start = function() {
                         }) //close second promise
                 }
             })
-        } //close first promise
-         // close start();
+        } //close first promise   // close start();
