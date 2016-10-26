@@ -24,10 +24,10 @@ connection.connect(function(err) {
 
 // READ
 // create table
-connection.query('SELECT * FROM Products', function(err, res) {
+connection.query('SELECT * FROM Bamazon.Products', function(err, res) {
     if (err) throw err;
     console.log("=======================================================");
-    console.log("Products available for sale");
+    console.log("This is Bamazon. These products are available for sale");
     console.log("=======================================================");
     for (var i = 0; i < res.length; i++) {
         console.log("______________________________________________________");
@@ -39,36 +39,70 @@ connection.query('SELECT * FROM Products', function(err, res) {
 });
 
 var start = function() {
-    // The app then prompts users with **two messages**.
-    // The first should ask them the ID of the product they would like to buy.
-    // The second message should ask how many units of the product they would like to buy.
-    console.log("Please enter the ID of the product you want and its quantity.")
+        // The app then prompts users with **two messages**.
+        // The first should ask them the ID of the product they would like to buy.
+        // The second message should ask how many units of the product they would like to buy.
+        console.log("Please enter the ID of the product you want and its quantity.")
 
-    inquirer.prompt([{
-        name: "id",
-        type: "input",
-        message: "What is the id number of the product you wish to purchase?",
-        validate: function(value) {
-            if (isNaN(value) == false) {
-                return true;
-            } else {
-                return false;
+        inquirer.prompt([{
+            name: "id",
+            type: "input",
+            message: "What is the id number of the product you wish to purchase?",
+            validate: function(value) {
+                if (isNaN(value) == false) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
-        }
-    }, {
-        name: "q",
-        type: "input",
-        message: "How many units of the product would like to buy?",
-        validate: function(value) {
-            if (isNaN(value) == false) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }]).then(function(answer) {
-        console.log(answer.id);
-        console.log(answer);
-        console.log(answer.q);
-    })
-}
+        }]).then(function(answer) {
+
+            var idOfProductToBuy = answer.id - 1;
+            console.log(idOfProductToBuy);
+
+            inquirer.prompt([{
+                name: "quantity",
+                type: "input",
+                message: "How many items would you like?",
+                validate: function(value) {
+                    if (isNaN(value) == false && parseInt(value) > 0 && parseInt(value) <= 10) {
+                        return true;
+                    } else {
+                        console.log("")
+                        console.log("You can only buy 10 items at this point. Please, try again.")
+                        return false;
+                    }
+                }
+            }]).then(function(ans) {
+
+                // console.log(ans.quantity);
+                // console.log(idOfProductToBuy);
+
+                var quantityToBuy = ans.quantity;
+                console.log("You would like to buy " + quantityToBuy + " items of the product with id of " + answer.id);
+
+
+                connection.query('SELECT StockQuantity FROM Bamazon.Products', function(err, res) {
+
+                    if (err) throw err;
+                    console.log(res)
+                    console.log(res[idOfProductToBuy].StockQuantity)
+                    console.log("Customer buys " + quantityToBuy);
+                    var newQuantity = parseInt(res[idOfProductToBuy].StockQuantity - ans.quantity);
+                    console.log("Update ineventory " + newQuantity);
+
+                })
+                connection.query("UPDATE products SET ? WHERE ?", [{
+                    StockQuantity: newQuantity
+                }, {
+                    id: answer.id
+                }], function(err, res) {
+                    if (err) throw err;
+                    console.log(res) });
+
+            })
+        })
+    }
+    // UPDATE Products
+    // SET StockQuantity = newQuantity
+    // WHERE id=1
