@@ -5,7 +5,7 @@
 
 ###Overview
 
-####Video link: https://youtu.be/LaeLlO37kbs
+####Video link to Challenge 1: https://youtu.be/LaeLlO37kbs
 
 Creating an Amazon-like storefront with MySQL. The app will take in orders from customers and deplete stock from the store's inventory.
 
